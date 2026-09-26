@@ -1,0 +1,25 @@
+kind = "web"
+previewPath = "/"
+title = "Almost Original"
+description = "A nature-inspired personal website for product work and personal scribbles, built with Astro, Tailwind CSS and TypeScript."
+version = "1.0.0"
+id = "artifacts/almost-original"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24373
+
+[services.development]
+run = "pnpm --filter @workspace/almost-original run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/almost-original", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/almost-original/dist/public"
+
+
+[services.env]
+PORT = "24373"
+BASE_PATH = "/"

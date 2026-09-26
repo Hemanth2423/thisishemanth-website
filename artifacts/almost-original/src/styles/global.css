@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,50..100;1,9..144,300..700,50..100&family=Instrument+Sans:ital,wght@0,400..600;1,400..600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+/* Tailwind v4 theme: tokens resolve to the active time-of-day palette */
+@theme inline {
+  --font-serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --color-ink: hsl(var(--ink));
+  --color-ink-soft: hsl(var(--ink-soft));
+  --color-accent: hsl(var(--accent));
+  --color-rule: hsl(var(--rule));
+  --color-surface: hsl(var(--surface) / 0.55);
+  --color-paper: hsl(var(--paper));
+}
+
+/* Daytime is the default (and the no-JS experience) */
+:root,
+[data-theme='day'] {
+  --g1: 78 30% 90%;   /* lichen mist */
+  --g2: 48 45% 91%;   /* parchment sun */
+  --g3: 150 18% 84%;  /* sage shade */
+  --ink: 150 28% 14%;
+  --ink-soft: 150 12% 32%;
+  --accent: 14 58% 38%;     /* rust bark */
+  --rule: 150 14% 70%;
+  --surface: 60 40% 97%;
+  --paper: 60 35% 95%;
+  --selection: 44 80% 78%;
+  color-scheme: light;
+}
+
+[data-theme='dawn'] {
+  --g1: 24 70% 90%;   /* apricot first light */
+  --g2: 330 30% 91%;  /* wild rose */
+  --g3: 200 30% 88%;  /* cold river */
+  --ink: 280 18% 17%;
+  --ink-soft: 280 8% 34%;
+  --accent: 340 45% 38%;
+  --rule: 300 12% 74%;
+  --surface: 30 60% 98%;
+  --paper: 24 55% 95%;
+  --selection: 340 60% 85%;
+  color-scheme: light;
+}
+
+[data-theme='sunset'] {
+  --g1: 20 62% 84%;   /* terracotta */
+  --g2: 40 70% 86%;   /* honey */
+  --g3: 350 32% 82%;  /* dusk heather */
+  --ink: 10 40% 13%;
+  --ink-soft: 10 18% 29%;
+  --accent: 165 45% 24%;    /* deep teal against warm sky */
+  --rule: 15 25% 66%;
+  --surface: 35 70% 96%;
+  --paper: 30 60% 92%;
+  --selection: 165 35% 78%;
+  color-scheme: light;
+}
+
+[data-theme='night'] {
+  --g1: 200 32% 11%;  /* spruce dark */
+  --g2: 230 26% 14%;  /* ink sky */
+  --g3: 170 28% 12%;  /* pond */
+  --ink: 50 30% 90%;  /* moonlit paper */
+  --ink-soft: 60 10% 70%;
+  --accent: 42 70% 68%;     /* firefly */
+  --rule: 190 14% 28%;
+  --surface: 200 25% 16%;
+  --paper: 200 28% 13%;
+  --selection: 42 50% 35%;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    background: hsl(var(--g2));
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    color: hsl(var(--ink));
+    background:
+      radial-gradient(120% 80% at 0% 0%, hsl(var(--g1)) 0%, transparent 60%),
+      radial-gradient(100% 70% at 100% 20%, hsl(var(--g3)) 0%, transparent 65%),
+      linear-gradient(180deg, hsl(var(--g2)), hsl(var(--g1)) 120%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* paper grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.22;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .28 0 0 0 0 .2 0 0 0 .35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  [data-theme='night'] body::before { mix-blend-mode: screen; opacity: 0.12; }
+
+  ::selection { background: hsl(var(--selection)); color: hsl(var(--ink)); }
+
+  a { color: inherit; }
+  :focus-visible {
+    outline: 2px solid hsl(var(--accent));
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  .link {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    text-decoration-color: hsl(var(--accent) / 0.45);
+    transition: text-decoration-color 0.3s ease, color 0.3s ease;
+  }
+  .link:hover { color: hsl(var(--accent)); text-decoration-color: hsl(var(--accent)); }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: hsl(var(--ink-soft));
+  }
+
+  .display {
+    font-family: var(--font-serif);
+    font-variation-settings: 'SOFT' 100, 'opsz' 144;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
+  }
+
+  /* Reading prose, tuned per theme via tokens */
+  .prose-leaf {
+    --tw-prose-body: hsl(var(--ink));
+    --tw-prose-headings: hsl(var(--ink));
+    --tw-prose-links: hsl(var(--accent));
+    --tw-prose-bold: hsl(var(--ink));
+    --tw-prose-counters: hsl(var(--accent));
+    --tw-prose-bullets: hsl(var(--accent) / 0.7);
+    --tw-prose-hr: hsl(var(--rule));
+    --tw-prose-quotes: hsl(var(--ink-soft));
+    --tw-prose-quote-borders: hsl(var(--accent) / 0.5);
+    --tw-prose-code: hsl(var(--ink));
+    --tw-prose-captions: hsl(var(--ink-soft));
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  .prose-leaf :where(h2, h3) {
+    font-family: var(--font-serif);
+    font-weight: 450;
+    letter-spacing: -0.01em;
+  }
+  .prose-leaf :where(blockquote) {
+    font-style: normal;
+    font-size: 0.92rem;
+    background: hsl(var(--surface) / 0.5);
+    border-radius: 0 0.6rem 0.6rem 0;
+    padding: 0.6rem 1rem;
+  }
+  .prose-leaf :where(blockquote p)::before,
+  .prose-leaf :where(blockquote p)::after { content: none; }
+  .prose-poem {
+    font-family: var(--font-serif);
+    font-size: 1.28rem;
+    line-height: 1.8;
+    font-variation-settings: 'SOFT' 100;
+  }
+
+  /* reveal on load — CSS only */
+  .rise {
+    animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(4deg); }
+}
+.sway { transform-origin: 50% 100%; animation: sway 7s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,17 @@
+Build a personal website using Astro, Tailwind CSS, and TypeScript. The site must be heavily optimized, shipping zero JavaScript by default where possible.
+
+1. Architecture & CMS:
+- Set up Astro Content Collections for two content types: "work" (for product case studies, AI/ML architecture, etc.) and "scribbles" (for journal entries, poetry, and thoughts).
+- Create markdown frontmatter schemas that include title, date, description, and an optional hero image.
+- Generate one dummy Markdown file for "work" (e.g., an AI product launch) and one for "scribbles" (e.g., a nature-inspired poem) to prove the routing works.
+
+2. Layout & Navigation:
+- Global Navigation: "Home", "Work", "Scribbles". Keep the header minimalist.
+- Global CTA: A sticky, non-intrusive component in the bottom corner (or integrated seamlessly into the layout) that says "Connect with me, don't be shy send hi 👋" and links to my LinkedIn.
+- Include the following introductory text on the Home page:
+"Almost original: Every product ever built, any great piece of art has relied on inspiration, either from fellow humans or from nature. But if we go deeper and ask ourselves what we believe in and base our work on it, I believe there is value in sharing it. I created this space to journal my thoughts and document my projects, and hope it serves as a means to meet some interesting people :) I have always been driven by nature; at times of need, I have relied on it for answers. Hence, I built this space to reflect my surroundings that served as an inspiration—and I hope to speak to you more intimately through my work!"
+
+3. Design & Vibe:
+- Typography & Colors: Use a clean, original, slightly earthy serif/sans-serif combination (inspired by jzhao.xyz).
+- Dynamic Theme: Implement a Tailwind configuration and a lightweight client-side script that reads the user's local time and dynamically changes the background gradient to reflect the time of day (dawn, daytime, sunset, night).
+- Canvas Overlay Placeholder: Create an empty Astro component called <LeafCanvas/> that spans the viewport with pointer-events disabled. Place it in the base layout. (I will inject the animation logic here later).

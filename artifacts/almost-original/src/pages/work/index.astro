@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import EntryList from '../../components/EntryList.astro';
+
+const entries = (await getCollection('work')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Base title="Work" description="Case studies and project notes from a product maker: what was built, why it mattered, and what nature taught along the way.">
+  <header class="pb-12 pt-16 sm:pt-24">
+    <p class="eyebrow rise" style="--i:0">Things made &middot; {entries.length} {entries.length === 1 ? 'entry' : 'entries'}</p>
+    <h1 class="display rise mt-4 text-[clamp(3rem,9vw,6.5rem)] font-light" style="--i:1">Work<span class="text-accent">.</span></h1>
+    <p class="rise mt-6 max-w-xl text-lg text-ink-soft" style="--i:2">Products, launches and experiments &mdash; documented honestly, including the parts that did not go to plan.</p>
+  </header>
+  <EntryList entries={entries} base="work" />
+</Base>

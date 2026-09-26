@@ -1,0 +1,58 @@
+---
+import '../styles/global.css';
+import { site } from '../config';
+import LeafCanvas from '../components/LeafCanvas.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ConnectCta from '../components/ConnectCta.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  type?: 'website' | 'article';
+  image?: string;
+  published?: Date;
+}
+const { title, description = site.description, type = 'website', image, published } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · Product work and writing shaped by nature`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
+const ogImage = image ? new URL(image, Astro.url.origin).href : undefined;
+
+const h = site.themeHours;
+const themeScript = `(function(){try{var h=new Date().getHours(),t='night';if(h>=${h.dawn}&&h<${h.day})t='dawn';else if(h>=${h.day}&&h<${h.sunset})t='day';else if(h>=${h.sunset}&&h<${h.night})t='sunset';document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name=theme-color]');if(m)m.content={dawn:'#f6e3d6',day:'#eef0e0',sunset:'#f2cdb4',night:'#131d24'}[t];}catch(e){}})();`;
+---
+<!doctype html>
+<html lang="en" data-theme="day">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline set:html={themeScript} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#eef0e0" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title ?? site.name} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {published && <meta property="article:published_time" content={published.toISOString()} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title ?? site.name} />
+    <meta name="twitter:description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body class="relative flex flex-col">
+    <a href="#main" class="sr-only z-50 rounded-full bg-paper px-4 py-2 focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to content</a>
+    <LeafCanvas />
+    <Header />
+    <main id="main" class="relative z-10 mx-auto w-full max-w-5xl flex-1 px-5 sm:px-8">
+      <slot />
+    </main>
+    <Footer />
+    <ConnectCta />
+  </body>
+</html>

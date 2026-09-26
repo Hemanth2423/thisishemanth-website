@@ -1,0 +1,22 @@
+---
+import { site } from '../config';
+const hasLink = site.linkedinUrl.trim().length > 0;
+---
+<aside aria-label="Connect" class="fixed bottom-4 left-1/2 z-20 w-[calc(100%-2rem)] max-w-max -translate-x-1/2 sm:bottom-6 sm:left-auto sm:right-6 sm:translate-x-0">
+  {hasLink ? (
+    <a
+      href={site.linkedinUrl}
+      rel="me noopener"
+      target="_blank"
+      class="group flex items-center gap-3 rounded-full border border-rule bg-paper/85 px-4 py-2.5 text-sm text-ink shadow-[0_8px_30px_-12px_hsl(var(--ink)/0.35)] backdrop-blur-md transition-transform duration-300 hover:-translate-y-0.5"
+    >
+      <span>{site.cta}</span>
+      <span class="eyebrow !text-[0.62rem] text-accent transition-transform duration-300 group-hover:translate-x-0.5">LinkedIn &rarr;</span>
+    </a>
+  ) : (
+    <div class="flex flex-col items-center gap-0.5 rounded-2xl border border-rule bg-paper/85 px-4 py-2.5 text-center text-sm text-ink shadow-[0_8px_30px_-12px_hsl(var(--ink)/0.35)] backdrop-blur-md sm:items-start sm:text-left">
+      <p>{site.cta}</p>
+      <p class="eyebrow !text-[0.62rem]">LinkedIn link coming soon</p>
+    </div>
+  )}
+</aside>

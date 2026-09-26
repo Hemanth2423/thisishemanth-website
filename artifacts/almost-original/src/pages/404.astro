@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import Sprig from '../components/Sprig.astro';
+import { url } from '../config';
+---
+<Base title="Path not found" description="This trail has gone quiet. The page you were looking for does not exist on Almost Original.">
+  <section class="flex flex-col items-start py-24 sm:py-36">
+    <Sprig class="sway rise h-24 w-14 text-accent" />
+    <p class="eyebrow rise mt-8" style="--i:1">404 &middot; overgrown</p>
+    <h1 class="display rise mt-4 text-[clamp(2.8rem,8vw,6rem)] font-light" style="--i:2">
+      The path ends <em class="text-accent">here</em>.
+    </h1>
+    <p class="rise mt-6 max-w-md text-lg text-ink-soft" style="--i:3">
+      Whatever grew at this address has returned to the soil. Let me walk you back somewhere familiar.
+    </p>
+    <div class="rise mt-10 flex flex-wrap gap-4 text-base" style="--i:4">
+      <a href={url('/')} class="rounded-full bg-ink px-5 py-2.5 text-paper transition-transform duration-300 hover:-translate-y-0.5">Back home</a>
+      <a href={url('/work/')} class="link px-2 py-2.5">Browse work</a>
+      <a href={url('/scribbles/')} class="link px-2 py-2.5">Read scribbles</a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { url, formatDate } from '../config';
+
+interface Props {
+  entries: CollectionEntry<'work'>[] | CollectionEntry<'scribbles'>[];
+  base: 'work' | 'scribbles';
+}
+const { entries, base } = Astro.props;
+---
+{entries.length === 0 ? (
+  <p class="rounded-2xl border border-dashed border-rule p-8 font-serif text-lg italic text-ink-soft">
+    Nothing has sprouted here yet. Check back after the next rain.
+  </p>
+) : (
+  <ol class="border-t border-rule">
+    {entries.map((entry, i) => (
+      <li class="rise border-b border-rule" style={`--i:${i + 2}`}>
+        <a
+          href={url(`/${base}/${entry.id}/`)}
+          class="group grid gap-2 py-6 sm:grid-cols-[9rem_1fr_auto] sm:items-baseline sm:gap-8"
+        >
+          <time datetime={entry.data.date.toISOString()} class="eyebrow">{formatDate(entry.data.date)}</time>
+          <div>
+            <h3 class="font-serif text-2xl leading-snug tracking-tight transition-colors duration-300 group-hover:text-accent sm:text-[1.7rem]">
+              {entry.data.title}
+            </h3>
+            <p class="mt-1.5 max-w-xl text-ink-soft">{entry.data.description}</p>
+          </div>
+          <span aria-hidden="true" class="hidden font-serif text-2xl text-accent opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100 sm:block">&rarr;</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+)}

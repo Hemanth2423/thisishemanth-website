@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import EntryList from '../../components/EntryList.astro';
+
+const entries = (await getCollection('scribbles')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Base title="Scribbles" description="Poems, fragments and intimate notes written on walks, in weather, and in the quiet between projects.">
+  <header class="pb-12 pt-16 sm:pt-24">
+    <p class="eyebrow rise" style="--i:0">Things felt &middot; {entries.length} {entries.length === 1 ? 'entry' : 'entries'}</p>
+    <h1 class="display rise mt-4 text-[clamp(3rem,9vw,6.5rem)] font-light" style="--i:1">Scribbles<span class="text-accent">.</span></h1>
+    <p class="rise mt-6 max-w-xl text-lg text-ink-soft" style="--i:2">Poems and small notes, mostly written outdoors. Less polished than the work, and closer to the root.</p>
+  </header>
+  <EntryList entries={entries} base="scribbles" />
+</Base>

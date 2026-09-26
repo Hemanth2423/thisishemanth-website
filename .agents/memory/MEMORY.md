@@ -1,0 +1,1 @@
+- [Astro managed workflows](astro-workflows.md) — Agent auto-backgrounding can leave the preview unavailable; managed servers need foreground behavior.
