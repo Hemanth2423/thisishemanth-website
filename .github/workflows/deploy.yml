@@ -21,6 +21,7 @@ jobs:
         uses: withastro/action@v6
         with:
           path: artifacts/almost-original
+          package-manager: pnpm
           build-cmd: pnpm exec astro build
           out-dir: dist/public
 
