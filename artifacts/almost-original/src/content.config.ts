@@ -9,6 +9,7 @@ const schema = ({ image }: SchemaContext) =>
     title: z.string(),
     date: z.coerce.date(),
     description: z.string(),
+    repo: z.string().regex(/^https?:\/\/.+$/).optional(),
     hero: image().optional(),
     heroAlt: z.string().optional(),
   });

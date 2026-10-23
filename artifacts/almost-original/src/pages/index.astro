@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import EntryList from '../components/EntryList.astro';
-import Sprig from '../components/Sprig.astro';
 import { url } from '../config';
 
 const byDate = (a: { data: { date: Date } }, b: { data: { date: Date } }) => b.data.date.valueOf() - a.data.date.valueOf();
@@ -10,26 +9,35 @@ const work = (await getCollection('work')).sort(byDate).slice(0, 3);
 const scribbles = (await getCollection('scribbles')).sort(byDate).slice(0, 3);
 ---
 <Base description="Almost Original is a personal journal of product work and intimate writing by a maker who has always turned to nature for answers.">
-  <section class="relative pb-20 pt-16 sm:pt-28" aria-labelledby="intro-title">
-    <p class="eyebrow rise" style="--i:0">A field journal &middot; est. under a birch tree</p>
-    <h1 id="intro-title" class="display rise mt-5 text-[clamp(3.4rem,11vw,8.5rem)] font-light" style="--i:1">
-      Almost<br /><em class="font-normal text-accent">original</em><span class="text-accent">.</span>
-    </h1>
-
-    <div class="mt-12 grid gap-10 sm:mt-16 sm:grid-cols-[1fr_minmax(0,34rem)] sm:gap-16">
-      <div class="rise hidden sm:block" style="--i:2">
-        <Sprig class="sway h-40 w-24 text-accent/70" />
+  <section class="relative pb-24 pt-16 sm:pt-28" aria-labelledby="intro-title">
+    <p class="eyebrow rise" style="--i:0">A field journal &middot; made slowly</p>
+    <div class="mt-5 grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
+      <div>
+        <h1 id="intro-title" class="display rise text-[clamp(3.4rem,10vw,7.3rem)] font-light" style="--i:1">
+          A field<br /><em class="font-normal text-accent">journal</em><span class="text-accent">.</span>
+        </h1>
+        <div class="mt-10 max-w-2xl space-y-6 text-[1.1rem] leading-[1.75] sm:text-[1.18rem]">
+          <p class="rise font-serif text-[1.4rem] leading-snug sm:text-[1.65rem]" style="--i:2">
+            Every product ever built, any great piece of art has relied on inspiration, either from fellow humans or from nature.
+          </p>
+          <p class="rise" style="--i:3">
+            But if we go deeper and ask ourselves what we believe in and base our work on it, I believe there is value in sharing it. I created this space to journal my thoughts and document my projects, and hope it serves as a means to meet some interesting people :)
+          </p>
+          <p class="rise" style="--i:4">
+            I have always been driven by nature; at times of need, I have relied on it for answers. Hence, I built this space to reflect my surroundings that served as an inspiration&mdash;and I hope to speak to you more intimately through my work!
+          </p>
+        </div>
       </div>
-      <div class="space-y-6 text-[1.15rem] leading-[1.75] sm:text-[1.22rem]">
-        <p class="rise font-serif text-[1.45rem] leading-snug sm:text-[1.7rem]" style="--i:2">
-          <span class="sr-only">Almost original: </span>Every product ever built, any great piece of art has relied on inspiration, either from fellow humans or from nature.
-        </p>
-        <p class="rise" style="--i:3">
-          But if we go deeper and ask ourselves what we believe in and base our work on it, I believe there is value in sharing it. I created this space to journal my thoughts and document my projects, and hope it serves as a means to meet some interesting people :)
-        </p>
-        <p class="rise" style="--i:4">
-          I have always been driven by nature; at times of need, I have relied on it for answers. Hence, I built this space to reflect my surroundings that served as an inspiration&mdash;and I hope to speak to you more intimately through my work!
-        </p>
+      <div class="portrait-collage rise mx-auto mt-2 w-full max-w-[19rem] lg:mt-8" style="--i:3">
+        <figure class="portrait-card">
+          <img src={url('/images/hemanth-kite.png')} alt="Hemanth holding a bird beside the water" loading="eager" />
+          <figcaption>a small moment outside</figcaption>
+        </figure>
+        <figure class="coast-card">
+          <img src={url('/images/hemanth-coast.png')} alt="Hemanth standing by the sea" loading="lazy" />
+        </figure>
+        <span class="paper-tape tape-one" aria-hidden="true"></span>
+        <span class="paper-tape tape-two" aria-hidden="true"></span>
       </div>
     </div>
   </section>

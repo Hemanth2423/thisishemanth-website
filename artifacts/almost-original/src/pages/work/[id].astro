@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 interface Props { entry: CollectionEntry<'work'> }
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, description, date, hero, heroAlt } = entry.data;
+const { title, description, date, hero, heroAlt, repo } = entry.data;
 const poem = false;
 ---
 <Base title={title} description={description} type="article" published={date} image={hero?.src}>
@@ -22,13 +22,14 @@ const poem = false;
       <time datetime={date.toISOString()} class="eyebrow rise block" style="--i:1">{formatDate(date)}</time>
       <h1 class:list={['display rise mt-4 text-[clamp(2.4rem,6vw,4rem)] font-light', poem && 'italic']} style="--i:2">{title}</h1>
       <p class="rise mt-5 text-lg text-ink-soft" style="--i:3">{description}</p>
+      {repo && <a href={repo} target="_blank" rel="noopener noreferrer" class="eyebrow link rise mt-5 inline-block" style="--i:4">View source on GitHub &rarr;</a>}
     </header>
     {hero && (
-      <figure class="rise mt-10 overflow-hidden rounded-2xl border border-rule" style="--i:4">
+      <figure class="rise mt-10 overflow-hidden rounded-2xl border border-rule" style="--i:5">
         <Image src={hero} alt={heroAlt ?? ''} class="h-auto w-full" />
       </figure>
     )}
-    <div class:list={['prose prose-leaf rise mt-10 max-w-none border-t border-rule pt-10', poem && 'prose-poem']} style="--i:4">
+    <div class:list={['prose prose-leaf rise mt-10 max-w-none border-t border-rule pt-10', poem && 'prose-poem']} style="--i:5">
       <Content />
     </div>
     <p aria-hidden="true" class="mt-16 text-center font-serif text-2xl text-accent">&#10086;</p>

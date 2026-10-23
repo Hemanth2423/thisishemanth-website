@@ -4,12 +4,12 @@
  * and the call-to-action will become a real link everywhere on the site.
  */
 export const site = {
-  name: 'Almost Original',
-  author: 'Almost Original',
+  name: 'Hemanth Nara Jayasankar',
+  author: 'Hemanth Nara Jayasankar',
   description:
-    'A quiet corner for product work and intimate writing, shaped by nature and shared in the hope of meeting interesting people.',
+    'A product manager building useful AI products, with a field journal for work, questions and the occasional poem.',
   linkedinUrl: 'https://www.linkedin.com/in/hemanth-nj/',
-  cta: "Connect with me, don't be shy send hi 👋",
+  cta: "Say hello — I don't bite 👋",
   /** Local-hour boundaries for the background themes (24h clock, start hour inclusive). */
   themeHours: { dawn: 5, day: 9, sunset: 17, night: 20 },
 } as const;

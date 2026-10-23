@@ -5,6 +5,7 @@ import LeafCanvas from '../components/LeafCanvas.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ConnectCta from '../components/ConnectCta.astro';
+import SkyDial from '../components/SkyDial.astro';
 
 interface Props {
   title?: string;
@@ -19,7 +20,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).hr
 const ogImage = image ? new URL(image, Astro.url.origin).href : undefined;
 
 const h = site.themeHours;
-const themeScript = `(function(){try{var h=new Date().getHours(),t='night';if(h>=${h.dawn}&&h<${h.day})t='dawn';else if(h>=${h.day}&&h<${h.sunset})t='day';else if(h>=${h.sunset}&&h<${h.night})t='sunset';document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name=theme-color]');if(m)m.content={dawn:'#f6e3d6',day:'#eef0e0',sunset:'#f2cdb4',night:'#131d24'}[t];}catch(e){}})();`;
+const themeScript = `(function(){try{var h=new Date().getHours(),a='night';if(h>=${h.dawn}&&h<${h.day})a='dawn';else if(h>=${h.day}&&h<${h.sunset})a='day';else if(h>=${h.sunset})a='sunset';var t=localStorage.getItem('sky-theme')||a;document.documentElement.dataset.theme=t;document.documentElement.dataset.autoTheme=a;var m=document.querySelector('meta[name=theme-color]');if(m)m.content={dawn:'#f6e3d6',day:'#eef0e0',sunset:'#f2cdb4',night:'#131d24'}[t];}catch(e){}})();`;
 ---
 <!doctype html>
 <html lang="en" data-theme="day">
@@ -49,6 +50,7 @@ const themeScript = `(function(){try{var h=new Date().getHours(),t='night';if(h>
     <a href="#main" class="sr-only z-50 rounded-full bg-paper px-4 py-2 focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to content</a>
     <LeafCanvas />
     <Header />
+    <SkyDial />
     <main id="main" class="relative z-10 mx-auto w-full max-w-5xl flex-1 px-5 sm:px-8">
       <slot />
     </main>
