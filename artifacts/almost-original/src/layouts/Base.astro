@@ -2,10 +2,12 @@
 import '../styles/global.css';
 import { site } from '../config';
 import LeafCanvas from '../components/LeafCanvas.astro';
+import LightScene from '../components/LightScene.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ConnectCta from '../components/ConnectCta.astro';
-import SkyDial from '../components/SkyDial.astro';
+import SkyCycle from '../components/SkyCycle.astro';
+import TimeStatus from '../components/TimeStatus.astro';
 
 interface Props {
   title?: string;
@@ -19,8 +21,7 @@ const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · Product 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
 const ogImage = image ? new URL(image, Astro.url.origin).href : undefined;
 
-const h = site.themeHours;
-const themeScript = `(function(){try{var h=new Date().getHours(),a='night';if(h>=${h.dawn}&&h<${h.day})a='dawn';else if(h>=${h.day}&&h<${h.sunset})a='day';else if(h>=${h.sunset})a='sunset';var t=localStorage.getItem('sky-theme')||a;document.documentElement.dataset.theme=t;document.documentElement.dataset.autoTheme=a;var m=document.querySelector('meta[name=theme-color]');if(m)m.content={dawn:'#f6e3d6',day:'#eef0e0',sunset:'#f2cdb4',night:'#131d24'}[t];}catch(e){}})();`;
+const themeScript = `(function(){try{var hour=Number(new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',hour:'2-digit',hourCycle:'h23'}).format(new Date())),a=hour<5?'night':hour<7?'dawn':hour<9?'sunrise':hour<17?'day':hour<19?'sunset':hour<21?'dusk':'night',colors={dawn:'#f6e3d6',sunrise:'#f6d7a5',day:'#eef0e0',sunset:'#e7ad72',dusk:'#9b684d',night:'#131d24'};document.documentElement.dataset.theme=a;document.documentElement.dataset.autoTheme=a;var m=document.querySelector('meta[name=theme-color]');if(m)m.content=colors[a];}catch(e){}})();`;
 ---
 <!doctype html>
 <html lang="en" data-theme="day">
@@ -48,13 +49,15 @@ const themeScript = `(function(){try{var h=new Date().getHours(),a='night';if(h>
   </head>
   <body class="relative flex flex-col">
     <a href="#main" class="sr-only z-50 rounded-full bg-paper px-4 py-2 focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to content</a>
+    <LightScene />
     <LeafCanvas />
     <Header />
-    <SkyDial />
+    <SkyCycle />
     <main id="main" class="relative z-10 mx-auto w-full max-w-5xl flex-1 px-5 sm:px-8">
       <slot />
     </main>
     <Footer />
+    <TimeStatus />
     <ConnectCta />
   </body>
 </html>

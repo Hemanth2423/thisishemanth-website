@@ -1,0 +1,16 @@
+---
+---
+<aside class="time-status" aria-label="Current time in Berkeley, California">
+  <span class="time-status-place"><small>Based in</small>Berkeley, California</span>
+  <span class="time-status-rule" aria-hidden="true"></span>
+  <time class="time-status-clock" data-berkeley-time>--:--:--</time>
+</aside>
+<script>
+  const clock = document.querySelector<HTMLTimeElement>('[data-berkeley-time]');
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Los_Angeles', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true,
+  });
+  const update = () => { if (clock) clock.textContent = formatter.format(new Date()); };
+  update();
+  window.setInterval(update, 1000);
+</script>

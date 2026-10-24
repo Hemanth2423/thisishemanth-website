@@ -1,0 +1,45 @@
+---
+---
+<div class="sky-cycle" aria-label="Lighting controls">
+  <button type="button" class="sky-stage" aria-live="polite" aria-label="Change the light">
+    <span class="sky-cycle-icon" aria-hidden="true">☀</span>
+    <span class="sky-cycle-label">Day</span>
+  </button>
+  <button type="button" class="sky-reset" aria-label="Use the current Berkeley time" title="Use current Berkeley time">↻</button>
+</div>
+<script>
+  const stages = [
+    { id: 'dawn', label: 'Dawn', icon: '◒' },
+    { id: 'sunrise', label: 'Sunrise', icon: '☼' },
+    { id: 'day', label: 'Day', icon: '☀' },
+    { id: 'sunset', label: 'Sunset', icon: '◐' },
+    { id: 'dusk', label: 'Dusk', icon: '☾' },
+    { id: 'night', label: 'Night', icon: '✦' },
+  ];
+  const colors: Record<string, string> = { dawn: '#f6e3d6', sunrise: '#f6d7a5', day: '#eef0e0', sunset: '#e7ad72', dusk: '#9b684d', night: '#131d24' };
+  const root = document.documentElement;
+  const control = document.querySelector<HTMLButtonElement>('.sky-stage');
+  const reset = document.querySelector<HTMLButtonElement>('.sky-reset');
+  const label = control?.querySelector('.sky-cycle-label');
+  const icon = control?.querySelector('.sky-cycle-icon');
+  const currentStage = () => {
+    const hour = Number(new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Los_Angeles', hour: '2-digit', hourCycle: 'h23',
+    }).format(new Date()));
+    return hour < 5 ? 'night' : hour < 7 ? 'dawn' : hour < 9 ? 'sunrise' : hour < 17 ? 'day' : hour < 19 ? 'sunset' : hour < 21 ? 'dusk' : 'night';
+  };
+  const paint = (id: string) => {
+    const stage = stages.find((item) => item.id === id) ?? stages[2];
+    root.dataset.theme = stage.id;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', colors[stage.id]);
+    if (label) label.textContent = stage.label;
+    if (icon) icon.textContent = stage.icon;
+    control?.setAttribute('aria-label', `Change the light. Current light: ${stage.label}`);
+  };
+  paint(currentStage());
+  control?.addEventListener('click', () => {
+    const current = stages.findIndex((item) => item.id === root.dataset.theme);
+    paint(stages[(current + 1) % stages.length].id);
+  });
+  reset?.addEventListener('click', () => paint(currentStage()));
+</script>
